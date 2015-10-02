@@ -56,7 +56,7 @@ namespace pps
             }
 
             notifyIcon.Visible = true;
-            notifyIcon.ShowBalloonTip(2000, "PowerPlanSwitcher", "I'm here!", ToolTipIcon.Info);
+            notifyIcon.ShowBalloonTip(2000, "PowerPlanSwitcher", notifyIcon.Text, ToolTipIcon.Info);
         }
 
         void ClickHandler(object sender, EventArgs e)
