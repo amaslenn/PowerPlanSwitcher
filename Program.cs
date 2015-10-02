@@ -49,14 +49,16 @@ namespace pps
         {
             if (IsCurrentHigh()) {
                 notifyIcon.Icon = Resource.high;
-                notifyIcon.Text = "Current scheme is HIGH PERFORMANCE";
+                notifyIcon.Text = "You are on HIGH PERFORMANCE";
             } else {
                 notifyIcon.Icon = Resource.low;
-                notifyIcon.Text = "Current scheme is POWER SAVER";
+                notifyIcon.Text = "You are on POWER SAVER";
             }
 
             notifyIcon.Visible = true;
             notifyIcon.ShowBalloonTip(2000, "PowerPlanSwitcher", notifyIcon.Text, ToolTipIcon.Info);
+            notifyIcon.Text = notifyIcon.BalloonTipText =
+                notifyIcon.Text + "\nLClick - change\nRClick - exit";
         }
 
         void ClickHandler(object sender, EventArgs e)
