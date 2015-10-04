@@ -36,13 +36,21 @@ namespace pps
             notifyIcon.Click += new EventHandler(ClickHandler);
         }
 
-        private bool IsCurrentHigh()
+        private Guid GetCurrentGuid()
         {
             IntPtr pCurrentSchemeGuid = IntPtr.Zero;
             PowerGetActiveScheme(IntPtr.Zero, ref pCurrentSchemeGuid);
-            var currentSchemeGuid = (Guid)Marshal.PtrToStructure(pCurrentSchemeGuid, typeof(Guid));
+            return (Guid)Marshal.PtrToStructure(pCurrentSchemeGuid, typeof(Guid));
+        }
 
-            return currentSchemeGuid == HIGH_PERF;
+        private bool IsCurrentHigh()
+        {
+            return  HIGH_PERF == GetCurrentGuid();
+        }
+
+        private bool IsCurrentLow()
+        {
+            return LOW_PERF == GetCurrentGuid();
         }
 
         private void SetIconState()
@@ -50,9 +58,12 @@ namespace pps
             if (IsCurrentHigh()) {
                 notifyIcon.Icon = Resource.high;
                 notifyIcon.Text = "You are on HIGH PERFORMANCE";
-            } else {
+            } else if (IsCurrentLow()) {
                 notifyIcon.Icon = Resource.low;
                 notifyIcon.Text = "You are on POWER SAVER";
+            } else {
+                notifyIcon.Icon = Resource.favicon;
+                notifyIcon.Text = "You are on ~BALANCE";
             }
 
             notifyIcon.Visible = true;
